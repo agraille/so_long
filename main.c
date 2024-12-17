@@ -6,7 +6,7 @@
 /*   By: agraille <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 10:58:30 by agraille          #+#    #+#             */
-/*   Updated: 2024/12/17 10:49:13 by agraille         ###   ########.fr       */
+/*   Updated: 2024/12/17 12:09:10 by agraille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,6 @@
 
 int	main(void)
 {
-	t_game *ptr;
-	
-	ptr = malloc(sizeof(t_game));
-	if (!ptr)
-		exit(EXIT_FAILURE);
-	init_window(ptr);
+	start_init();
+	return (0);
 }

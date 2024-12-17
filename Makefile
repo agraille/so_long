@@ -6,14 +6,14 @@
 #    By: agraille <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/16 10:58:27 by agraille          #+#    #+#              #
-#    Updated: 2024/12/17 10:49:47 by agraille         ###   ########.fr        #
+#    Updated: 2024/12/17 11:43:15 by agraille         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = so_long
 CC=cc
 CFLAGS=-Wall -Wextra -Werror
-SRC = main.c init_and_free.c
+SRC = main.c window.c
 OBJ_DIR = obj
 OBJ	= $(addprefix $(OBJ_DIR)/,$(SRC:%.c=%.o))
 
