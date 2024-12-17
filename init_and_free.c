@@ -1,23 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   init_and_free.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: agraille <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/16 10:58:30 by agraille          #+#    #+#             */
-/*   Updated: 2024/12/17 10:49:13 by agraille         ###   ########.fr       */
+/*   Created: 2024/12/17 10:37:27 by agraille          #+#    #+#             */
+/*   Updated: 2024/12/17 10:59:35 by agraille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/so_long.h"
 
-int	main(void)
+void	init_window(t_game *ptr)
 {
-	t_game *ptr;
-	
-	ptr = malloc(sizeof(t_game));
-	if (!ptr)
+	ptr->ptr_mlx = mlx_init();
+	if (!ptr->ptr_mlx)
+	{
+		free(ptr);
 		exit(EXIT_FAILURE);
-	init_window(ptr);
+	}
+	ptr->window = mlx_new_window(ptr->ptr_mlx, 640, 360, "so_long");
+	if (!ptr->window)
+	{
+		free(ptr->ptr_mlx);
+		free(ptr);
+		exit(EXIT_FAILURE);
+	}
+	mlx_loop(ptr->ptr_mlx);
 }
+
+// void	exit_window(t_game *ptr)
+// {
+	
+// }
