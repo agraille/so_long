@@ -6,7 +6,7 @@
 /*   By: agraille <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 10:37:27 by agraille          #+#    #+#             */
-/*   Updated: 2024/12/17 13:36:07 by agraille         ###   ########.fr       */
+/*   Updated: 2024/12/17 22:32:29 by agraille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	keyboard_touch(int keycode, t_win *p)
 {
 	if (keycode == ESCAPE)
 		exit_window(p);
-	exit(EXIT_SUCCESS);
+	return (1);
 }		
 
 void	start_init(void)
@@ -56,7 +56,7 @@ void	start_init(void)
 	p->pos_x = 640;
 	p->pos_y = 360;
 	init_window(p);
-	mlx_hook(p->window, WINDOW_CLOSED, 0, exit_window, p);
+	mlx_hook(p->window, WINDOW_CLOSED, 0,&exit_window, p);
 	mlx_key_hook(p->window, &keyboard_touch, p);
 	mlx_loop(p->ptr_mlx);
 }
