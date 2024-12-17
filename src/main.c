@@ -6,11 +6,11 @@
 /*   By: agraille <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 10:58:30 by agraille          #+#    #+#             */
-/*   Updated: 2024/12/17 12:09:10 by agraille         ###   ########.fr       */
+/*   Updated: 2024/12/17 13:36:11 by agraille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "include/so_long.h"
+#include "../include/so_long.h"
 
 int	main(void)
 {

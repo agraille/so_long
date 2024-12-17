@@ -6,13 +6,13 @@
 /*   By: agraille <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 10:37:27 by agraille          #+#    #+#             */
-/*   Updated: 2024/12/17 12:26:09 by agraille         ###   ########.fr       */
+/*   Updated: 2024/12/17 13:36:07 by agraille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "include/so_long.h"
+#include "../include/so_long.h"
 
-void	init_window(t_game *p)
+void	init_window(t_win *p)
 {
 	p->ptr_mlx = mlx_init();
 	if (!p->ptr_mlx)
@@ -30,7 +30,7 @@ void	init_window(t_game *p)
 	
 }
 
-int	exit_window(t_game *p)
+int	exit_window(t_win *p)
 {
 	mlx_destroy_window(p->ptr_mlx, p->window);
 	mlx_destroy_display(p->ptr_mlx);
@@ -39,17 +39,24 @@ int	exit_window(t_game *p)
 	exit(EXIT_SUCCESS);
 }
 
+int	keyboard_touch(int keycode, t_win *p)
+{
+	if (keycode == ESCAPE)
+		exit_window(p);
+	exit(EXIT_SUCCESS);
+}		
+
 void	start_init(void)
 {
-	t_game *p;
+	t_win *p;
 	
-	p = malloc(sizeof(t_game));
+	p = malloc(sizeof(t_win));
 	if (!p)
 		exit(EXIT_FAILURE);
 	p->pos_x = 640;
 	p->pos_y = 360;
 	init_window(p);
-	mlx_hook(p->window, 17, 0, exit_window, p);
-	// mlx_key_hook
+	mlx_hook(p->window, WINDOW_CLOSED, 0, exit_window, p);
+	mlx_key_hook(p->window, &keyboard_touch, p);
 	mlx_loop(p->ptr_mlx);
 }
