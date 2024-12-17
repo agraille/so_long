@@ -6,14 +6,14 @@
 /*   By: agraille <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 13:32:07 by agraille          #+#    #+#             */
-/*   Updated: 2024/12/17 13:21:52 by agraille         ###   ########.fr       */
+/*   Updated: 2024/12/17 21:47:40 by agraille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SO_LONG_H
 # define SO_LONG_H
 
-# include "minilibx/mlx.h"
+# include "../minilibx/mlx.h"
 # include <stdlib.h>
 # include <fcntl.h>
 
@@ -31,4 +31,6 @@ void	init_window(t_win *ptr);
 int		exit_window(t_win *ptr);
 int		keyboard_touch(int keycode, t_win *p);
 void	start_init(void);
+char	*get_next_line(int fd);
+
 #endif

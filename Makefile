@@ -6,14 +6,14 @@
 #    By: agraille <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/16 10:58:27 by agraille          #+#    #+#              #
-#    Updated: 2024/12/17 11:43:15 by agraille         ###   ########.fr        #
+#    Updated: 2024/12/17 21:46:48 by agraille         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = so_long
 CC=cc
 CFLAGS=-Wall -Wextra -Werror
-SRC = main.c window.c
+SRC = src/main.c src/window.c src/gnl/gnl.c src/gnl/gnl_utils.c
 OBJ_DIR = obj
 OBJ	= $(addprefix $(OBJ_DIR)/,$(SRC:%.c=%.o))
 
@@ -32,7 +32,7 @@ $(NAME): $(OBJ)
 all: $(NAME)
 
 $(OBJ_DIR)/%.o: %.c Makefile ./include/so_long.h
-	@mkdir -p $(OBJ_DIR)
+	@mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) -I . -I $(MLX_DIR) -c $< -o $@
 	@echo "$(GREEN)╔═══════════════════════════╗$(RESET)"
 	@echo "$(GREEN)║   Compilation Succes! ✅  ║$(RESET)"
