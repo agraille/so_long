@@ -1,35 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   so_long.h                                          :+:      :+:    :+:   */
+/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: agraille <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/16 13:32:07 by agraille          #+#    #+#             */
-/*   Updated: 2024/12/18 09:05:45 by agraille         ###   ########.fr       */
+/*   Created: 2024/11/09 23:11:34 by agraille          #+#    #+#             */
+/*   Updated: 2024/12/18 07:45:42 by agraille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SO_LONG_H
-# define SO_LONG_H
+#include "../include/libft.h"
 
-# include "../minilibx/mlx.h"
-# include <stdlib.h>
-# include <fcntl.h>
-
-#define WINDOW_CLOSED 17
-#define ESCAPE 65307
-typedef struct s_game
+void	ft_putnbr_fd(int n, int fd)
 {
-	void	*ptr_mlx;
-	void	*window;
-	int		pos_x;
-	int		pos_y;
-}	t_win;
+	unsigned int	a;
+	char			c;
 
-void	init_window(t_win *ptr);
-int		exit_window(t_win *ptr);
-int		keyboard_touch(int keycode, t_win *p);
-void	start_init(void);
-
-#endif
+	if (!fd)
+		return ;
+	if (n < 0)
+	{
+		write(fd, "-", 1);
+		a = -n;
+	}
+	else
+		a = n;
+	if (a > 9)
+		ft_putnbr_fd(a / 10, fd);
+	c = a % 10 + '0';
+	write(fd, &c, 1);
+}

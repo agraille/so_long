@@ -1,35 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   so_long.h                                          :+:      :+:    :+:   */
+/*   ft_lstclear.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: agraille <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/16 13:32:07 by agraille          #+#    #+#             */
-/*   Updated: 2024/12/18 09:05:45 by agraille         ###   ########.fr       */
+/*   Created: 2024/11/12 10:12:06 by agraille          #+#    #+#             */
+/*   Updated: 2024/12/18 07:44:49 by agraille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SO_LONG_H
-# define SO_LONG_H
+#include "../include/libft.h"
 
-# include "../minilibx/mlx.h"
-# include <stdlib.h>
-# include <fcntl.h>
-
-#define WINDOW_CLOSED 17
-#define ESCAPE 65307
-typedef struct s_game
+void	ft_lstclear(t_list **lst, void (*del)(void *))
 {
-	void	*ptr_mlx;
-	void	*window;
-	int		pos_x;
-	int		pos_y;
-}	t_win;
+	t_list	*current;
+	t_list	*next;
 
-void	init_window(t_win *ptr);
-int		exit_window(t_win *ptr);
-int		keyboard_touch(int keycode, t_win *p);
-void	start_init(void);
-
-#endif
+	current = *lst;
+	while (current != NULL)
+	{
+		next = current->next;
+		del(current->content);
+		free(current);
+		current = next;
+	}
+	*lst = NULL;
+}

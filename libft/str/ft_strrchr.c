@@ -1,35 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   so_long.h                                          :+:      :+:    :+:   */
+/*   ft_strrchr.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: agraille <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/16 13:32:07 by agraille          #+#    #+#             */
-/*   Updated: 2024/12/18 09:05:45 by agraille         ###   ########.fr       */
+/*   Created: 2024/11/06 08:12:49 by agraille          #+#    #+#             */
+/*   Updated: 2024/11/06 08:16:42 by agraille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SO_LONG_H
-# define SO_LONG_H
+#include "../include/libft.h"
 
-# include "../minilibx/mlx.h"
-# include <stdlib.h>
-# include <fcntl.h>
-
-#define WINDOW_CLOSED 17
-#define ESCAPE 65307
-typedef struct s_game
+char	*ft_strrchr(const char *str, int ch)
 {
-	void	*ptr_mlx;
-	void	*window;
-	int		pos_x;
-	int		pos_y;
-}	t_win;
+	int	i;
 
-void	init_window(t_win *ptr);
-int		exit_window(t_win *ptr);
-int		keyboard_touch(int keycode, t_win *p);
-void	start_init(void);
-
-#endif
+	i = 0;
+	while (str[i])
+		i++;
+	while (i >= 0)
+	{
+		if (str[i] == (unsigned char) ch)
+			return ((char *) &str[i]);
+		i--;
+	}
+	return (NULL);
+}

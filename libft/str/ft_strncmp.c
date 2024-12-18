@@ -1,35 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   so_long.h                                          :+:      :+:    :+:   */
+/*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: agraille <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/16 13:32:07 by agraille          #+#    #+#             */
-/*   Updated: 2024/12/18 09:05:45 by agraille         ###   ########.fr       */
+/*   Created: 2024/11/06 08:24:28 by agraille          #+#    #+#             */
+/*   Updated: 2024/12/18 07:46:32 by agraille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SO_LONG_H
-# define SO_LONG_H
+#include "../include/libft.h"
 
-# include "../minilibx/mlx.h"
-# include <stdlib.h>
-# include <fcntl.h>
-
-#define WINDOW_CLOSED 17
-#define ESCAPE 65307
-typedef struct s_game
+int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {
-	void	*ptr_mlx;
-	void	*window;
-	int		pos_x;
-	int		pos_y;
-}	t_win;
+	size_t	i;
 
-void	init_window(t_win *ptr);
-int		exit_window(t_win *ptr);
-int		keyboard_touch(int keycode, t_win *p);
-void	start_init(void);
-
-#endif
+	i = 0;
+	while (i < n && s1[i] == s2[i] && s1[i] != '\0' && s2[i] != '\0')
+	{
+		i++;
+	}
+	if (i == n)
+		return (0);
+	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+}

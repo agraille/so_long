@@ -6,11 +6,11 @@
 /*   By: agraille <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 21:43:14 by agraille          #+#    #+#             */
-/*   Updated: 2024/12/17 21:45:41 by agraille         ###   ########.fr       */
+/*   Updated: 2024/12/18 07:42:56 by agraille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "../include/get_next_line.h"
 
 static int	ft_check_if_line_possible(t_chain *buffer)
 {

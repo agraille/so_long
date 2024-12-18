@@ -6,11 +6,11 @@
 /*   By: agraille <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 21:40:44 by agraille          #+#    #+#             */
-/*   Updated: 2024/12/17 21:43:49 by agraille         ###   ########.fr       */
+/*   Updated: 2024/12/18 07:42:52 by agraille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "../include/get_next_line.h"
 
 char	*ft_strchr(char *s, int c)
 {

@@ -1,35 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   so_long.h                                          :+:      :+:    :+:   */
+/*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: agraille <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/16 13:32:07 by agraille          #+#    #+#             */
-/*   Updated: 2024/12/18 09:05:45 by agraille         ###   ########.fr       */
+/*   Created: 2024/11/05 15:07:55 by agraille          #+#    #+#             */
+/*   Updated: 2024/12/18 07:45:16 by agraille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SO_LONG_H
-# define SO_LONG_H
+#include "../include/libft.h"
 
-# include "../minilibx/mlx.h"
-# include <stdlib.h>
-# include <fcntl.h>
-
-#define WINDOW_CLOSED 17
-#define ESCAPE 65307
-typedef struct s_game
+void	*ft_memcpy(void *dest, const void *src, size_t n)
 {
-	void	*ptr_mlx;
-	void	*window;
-	int		pos_x;
-	int		pos_y;
-}	t_win;
+	unsigned char		*d;
+	const unsigned char	*s;
+	size_t				i;
 
-void	init_window(t_win *ptr);
-int		exit_window(t_win *ptr);
-int		keyboard_touch(int keycode, t_win *p);
-void	start_init(void);
-
-#endif
+	if (dest == NULL && src == NULL && n > 0)
+		return (NULL);
+	d = (unsigned char *)dest;
+	s = (const unsigned char *)src;
+	i = 0;
+	while (i < n)
+	{
+		d[i] = s[i];
+		i++;
+	}
+	return (dest);
+}
