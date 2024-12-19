@@ -6,7 +6,7 @@
 #    By: agraille <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/07 08:03:50 by agraille          #+#    #+#              #
-#    Updated: 2024/12/18 09:23:54 by agraille         ###   ########.fr        #
+#    Updated: 2024/12/19 08:44:18 by agraille         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,20 +20,19 @@ SRC = gnl/gnl.c gnl/gnl_utils.c is_check/ft_isalpha.c is_check/ft_isdigit.c is_c
 
 OBJ_DIR = obj
 OBJ	= $(addprefix $(OBJ_DIR)/,$(SRC:%.c=%.o))
-OBJ_BONUS = $(SRC_BONUS:.c=.o)
 NAME = libft.a
 
 
 all: $(NAME)
 
-$(OBJ_DIR)/%.o: %.c Makefile include/libft.h
+$(OBJ_DIR)/%.o: %.c Makefile include/*.h
 	@mkdir -p $(dir $@)
 	@$(CC) $(CFLAGS) -c $< -o $@
 	
 $(NAME): $(OBJ) $(HEADER)
-	@ar rcs $(NAME) $(OBJ)
+	ar rcs $(NAME) $(OBJ)
 
-%.o: %.c libft.h
+%.o: %.c include/libft.h
 	@$(CC) $(CFLAGS) -I . -c $< -o $@
 
 clean :

@@ -6,7 +6,7 @@
 /*   By: agraille <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 10:37:27 by agraille          #+#    #+#             */
-/*   Updated: 2024/12/17 22:32:29 by agraille         ###   ########.fr       */
+/*   Updated: 2024/12/19 16:22:39 by agraille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ void	init_window(t_win *p)
 		free(p);
 		exit(EXIT_FAILURE);
 	}
-	
 }
 
 int	exit_window(t_win *p)
@@ -44,19 +43,19 @@ int	keyboard_touch(int keycode, t_win *p)
 	if (keycode == ESCAPE)
 		exit_window(p);
 	return (1);
-}		
+}
 
 void	start_init(void)
 {
-	t_win *p;
-	
+	t_win	*p;
+
 	p = malloc(sizeof(t_win));
 	if (!p)
 		exit(EXIT_FAILURE);
 	p->pos_x = 640;
 	p->pos_y = 360;
 	init_window(p);
-	mlx_hook(p->window, WINDOW_CLOSED, 0,&exit_window, p);
+	mlx_hook(p->window, WINDOW_CLOSED, 0, &exit_window, p);
 	mlx_key_hook(p->window, &keyboard_touch, p);
 	mlx_loop(p->ptr_mlx);
 }
