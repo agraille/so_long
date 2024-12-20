@@ -6,7 +6,7 @@
 /*   By: agraille <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 10:37:27 by agraille          #+#    #+#             */
-/*   Updated: 2024/12/20 12:03:14 by agraille         ###   ########.fr       */
+/*   Updated: 2024/12/20 12:14:31 by agraille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ static void	load_images(t_win *p)
 
 void	init_window(t_win *p)
 {
-	load_images(p);
 	p->pos_x = 1920;
 	p->pos_y = 1080;
 	p->mlx = mlx_init();
@@ -86,6 +85,10 @@ void	start_init(void)
 		exit(EXIT_FAILURE);
 	p->pix = 32;
 	init_window(p);
+	load_images(p);
+	mlx_put_image_to_window(p->mlx, p->window, p->pb, 0, 0);
+	mlx_put_image_to_window(p->mlx, p->window, p->pb, 32, 0);
+	mlx_put_image_to_window(p->mlx, p->window, p->pb, 64, 0);
 	mlx_hook(p->window, WINDOW_CLOSED, 0, &exit_window, p);
 	mlx_key_hook(p->window, &keyboard_touch, p);
 	mlx_loop(p->mlx);
