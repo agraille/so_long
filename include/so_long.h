@@ -6,7 +6,7 @@
 /*   By: agraille <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 13:32:06 by agraille          #+#    #+#             */
-/*   Updated: 2024/12/20 12:05:14 by agraille         ###   ########.fr       */
+/*   Updated: 2024/12/20 23:04:56 by agraille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 
 typedef struct s_game
 {
+	char	**map;
 	void	*mlx;
 	void	*window;
 	void	*pe;
@@ -48,16 +49,18 @@ typedef struct s_flood_fill
 	int	p_x;
 }	t_ff;
 
-void	start_init(void);
-void	init_window(t_win *ptr);
-void	parsing(char *argv1);
+void	start_init(char *argv1, int height);
+int		parsing(char *argv1);
 void	free_map(char **map);
 void	error(char **map, char *str);
+void	load_pictures(t_win *p);
+void	render_map(t_win *p);
 int		exit_window(t_win *ptr);
 int		keyboard_touch(int keycode, t_win *p);
 int		check_char(char c);
 int		requirements(char **map, int height, t_ff value);
-void	free_images(t_win *p);
+void	free_pictures(t_win *p);
 int		exit_window(t_win *p);
+char	**map_in_tab(char *argv1, int height);
 
 #endif

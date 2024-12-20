@@ -6,7 +6,7 @@
 /*   By: agraille <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 10:58:30 by agraille          #+#    #+#             */
-/*   Updated: 2024/12/20 07:48:38 by agraille         ###   ########.fr       */
+/*   Updated: 2024/12/20 21:02:36 by agraille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,11 @@
 
 int	main(int argc, char **argv)
 {
+	int	height;
+	
 	if (argc != 2)
 		exit(EXIT_FAILURE);
-	parsing(argv[1]);
-	start_init();
+	height = parsing(argv[1]);
+	start_init(argv[1], height);
 	return (0);
 }

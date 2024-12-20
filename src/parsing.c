@@ -6,7 +6,7 @@
 /*   By: agraille <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 09:33:31 by agraille          #+#    #+#             */
-/*   Updated: 2024/12/19 16:23:07 by agraille         ###   ########.fr       */
+/*   Updated: 2024/12/20 21:01:52 by agraille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ static int	valid_width(char **map, int height)
 	return (1);
 }
 
-static char	**map_in_tab(char *argv1, int height)
+char	**map_in_tab(char *argv1, int height)
 {
 	int		fd;
 	int		i;
@@ -110,7 +110,7 @@ static void	find_line(char *argv1, int *height)
 	close (fd);
 }
 
-void	parsing(char *argv1)
+int	parsing(char *argv1)
 {
 	char	**map;
 	int		height;
@@ -126,4 +126,5 @@ void	parsing(char *argv1)
 	if (!requirements(map, height, value))
 		error(map, "The map cannot be completed.\n");
 	free_map(map);
+	return (height);
 }

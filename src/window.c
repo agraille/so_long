@@ -6,30 +6,17 @@
 /*   By: agraille <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 10:37:27 by agraille          #+#    #+#             */
-/*   Updated: 2024/12/20 12:14:31 by agraille         ###   ########.fr       */
+/*   Updated: 2024/12/20 23:51:13 by agraille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/so_long.h"
 
-static void	load_images(t_win *p)
+static void	init_window(t_win *p, int height)
 {
-	p->pe = mlx_xpm_file_to_image(p->mlx, "xpm/End.xpm", &p->pix, &p->pix);
-	p->pb = mlx_xpm_file_to_image(p->mlx, "xpm/Grass32.xpm", &p->pix, &p->pix);
-	p->pc = mlx_xpm_file_to_image(p->mlx, "xpm/Icon1.xpm", &p->pix, &p->pix);
-	p->pp = mlx_xpm_file_to_image(p->mlx, "xpm/Player32.xpm", &p->pix, &p->pix);
-	p->pw = mlx_xpm_file_to_image(p->mlx, "xpm/Stone32.xpm", &p->pix, &p->pix);
-	if (!p->pe || !p->pb || !p->pc || !p->pp || !p->pw)
-	{
-		free_images(p);
-		exit_window(p);
-	}
-}
-
-void	init_window(t_win *p)
-{
-	p->pos_x = 1920;
-	p->pos_y = 1080;
+	p->pix = 32;
+	p->pos_x = (ft_strlen(p->map[0]) - 1) * 32;
+	p->pos_y = height * 32;
 	p->mlx = mlx_init();
 	if (!p->mlx)
 	{
@@ -45,7 +32,7 @@ void	init_window(t_win *p)
 	}
 }
 
-void	free_images(t_win *p)
+void	free_pictures(t_win *p)
 {
 	if (p->pe)
 		mlx_destroy_image(p->mlx, p->pe);
@@ -61,7 +48,8 @@ void	free_images(t_win *p)
 
 int	exit_window(t_win *p)
 {
-	free_images(p);
+	free_map(p->map);
+	free_pictures(p);
 	mlx_destroy_window(p->mlx, p->window);
 	mlx_destroy_display(p->mlx);
 	free(p->mlx);
@@ -76,19 +64,19 @@ int	keyboard_touch(int keycode, t_win *p)
 	return (1);
 }
 
-void	start_init(void)
+void	start_init(char *argv1, int height)
 {
 	t_win	*p;
 
 	p = malloc(sizeof(t_win));
 	if (!p)
 		exit(EXIT_FAILURE);
-	p->pix = 32;
-	init_window(p);
-	load_images(p);
-	mlx_put_image_to_window(p->mlx, p->window, p->pb, 0, 0);
-	mlx_put_image_to_window(p->mlx, p->window, p->pb, 32, 0);
-	mlx_put_image_to_window(p->mlx, p->window, p->pb, 64, 0);
+	p->map = map_in_tab(argv1, height);
+	if (!p->map)
+		exit(EXIT_FAILURE);
+	init_window(p, height);
+	load_pictures(p);
+	render_map(p);
 	mlx_hook(p->window, WINDOW_CLOSED, 0, &exit_window, p);
 	mlx_key_hook(p->window, &keyboard_touch, p);
 	mlx_loop(p->mlx);
