@@ -6,7 +6,7 @@
 /*   By: agraille <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 10:58:30 by agraille          #+#    #+#             */
-/*   Updated: 2024/12/19 10:31:40 by agraille         ###   ########.fr       */
+/*   Updated: 2024/12/20 07:48:38 by agraille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,6 @@ int	main(int argc, char **argv)
 	if (argc != 2)
 		exit(EXIT_FAILURE);
 	parsing(argv[1]);
-	// start_init();
+	start_init();
 	return (0);
 }
