@@ -6,7 +6,7 @@
 /*   By: agraille <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/20 20:54:25 by agraille          #+#    #+#             */
-/*   Updated: 2024/12/20 23:05:03 by agraille         ###   ########.fr       */
+/*   Updated: 2024/12/21 13:17:18 by agraille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,28 +14,30 @@
 
 void	render_map(t_win *p)
 {
-	int x;
-	int y;
+	int	x;
+	int	y;
 
-	y = 0;
-	while (p->map[y])
+	y = -1;
+	while (p->map[++y])
 	{
-		x = 0;
-		while (p->map[y][x] != '\n')
+		x = -1;
+		while (p->map[y][++x] != '\n')
 		{
 			if (p->map[y][x] == '1')
-				mlx_put_image_to_window(p->mlx, p->window, p->pw, x * p->pix, y * p->pix);
+				mlx_put_image_to_window(p->mlx, p->win, p->pw, x * p->pix, y * p->pix);
 			else if (p->map[y][x] == '0')
-				mlx_put_image_to_window(p->mlx, p->window, p->pb, x * p->pix, y * p->pix);
+				mlx_put_image_to_window(p->mlx, p->win, p->pb, x * p->pix, y * p->pix);
 			else if (p->map[y][x] == 'P')
-				mlx_put_image_to_window(p->mlx, p->window, p->pp, x * p->pix, y * p->pix);
+			{
+				mlx_put_image_to_window(p->mlx, p->win, p->pp, x * p->pix, y * p->pix);
+				p->player_x = x;
+				p->player_y = y;
+			}
 			else if (p->map[y][x] == 'C')
-				mlx_put_image_to_window(p->mlx, p->window, p->pc, x * p->pix, y * p->pix);
+				mlx_put_image_to_window(p->mlx, p->win, p->pc, x * p->pix, y * p->pix);
 			else if (p->map[y][x] == 'E')
-				mlx_put_image_to_window(p->mlx, p->window, p->pe, x * p->pix, y * p->pix);
-			x++;
+				mlx_put_image_to_window(p->mlx, p->win, p->pe, x * p->pix, y * p->pix);
 		}
-		y++;
 	}
 }
 

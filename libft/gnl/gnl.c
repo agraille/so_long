@@ -6,7 +6,7 @@
 /*   By: agraille <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 21:43:14 by agraille          #+#    #+#             */
-/*   Updated: 2024/12/19 10:15:20 by agraille         ###   ########.fr       */
+/*   Updated: 2024/12/21 13:13:31 by agraille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static char	*ft_extract_line(t_chain **buffer, char *line)
 	if (n_pos)
 		ft_memmove((*buffer)->content, n_pos + 1, ft_strlen(n_pos + 1) + 1);
 	if ((*buffer)->content[0] == '\0' && (*buffer)->next == NULL)
-        ft_free_chain(buffer);
+		ft_free_chain(buffer);
 	return (line);
 }
 

@@ -6,25 +6,45 @@
 /*   By: agraille <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 10:37:27 by agraille          #+#    #+#             */
-/*   Updated: 2024/12/20 23:51:13 by agraille         ###   ########.fr       */
+/*   Updated: 2024/12/21 13:16:00 by agraille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/so_long.h"
 
+static void	count_coins(t_win *p)
+{
+	int	x;
+	int	y;
+
+	p->coin = 0;
+	y = 0;
+	while (p->map[y])
+	{
+		x = 0;
+		while (p->map[y][x] != '\n' && p->map[y][x] != '\0')
+		{
+			if (p->map[y][x] == 'C')
+				p->coin += 1;
+			x++;
+		}
+		y++;
+	}
+}
+
 static void	init_window(t_win *p, int height)
 {
 	p->pix = 32;
-	p->pos_x = (ft_strlen(p->map[0]) - 1) * 32;
-	p->pos_y = height * 32;
+	p->size_x = (ft_strlen(p->map[0]) - 1) * 32;
+	p->size_y = height * 32;
 	p->mlx = mlx_init();
 	if (!p->mlx)
 	{
 		free(p);
 		exit(EXIT_FAILURE);
 	}
-	p->window = mlx_new_window(p->mlx, p->pos_x, p->pos_y, "so_long");
-	if (!p->window)
+	p->win = mlx_new_window(p->mlx, p->size_x, p->size_y, "so_long");
+	if (!p->win)
 	{
 		free(p->mlx);
 		free(p);
@@ -50,18 +70,11 @@ int	exit_window(t_win *p)
 {
 	free_map(p->map);
 	free_pictures(p);
-	mlx_destroy_window(p->mlx, p->window);
+	mlx_destroy_window(p->mlx, p->win);
 	mlx_destroy_display(p->mlx);
 	free(p->mlx);
 	free(p);
 	exit(EXIT_SUCCESS);
-}
-
-int	keyboard_touch(int keycode, t_win *p)
-{
-	if (keycode == ESCAPE)
-		exit_window(p);
-	return (1);
 }
 
 void	start_init(char *argv1, int height)
@@ -76,8 +89,9 @@ void	start_init(char *argv1, int height)
 		exit(EXIT_FAILURE);
 	init_window(p, height);
 	load_pictures(p);
+	count_coins(p);
 	render_map(p);
-	mlx_hook(p->window, WINDOW_CLOSED, 0, &exit_window, p);
-	mlx_key_hook(p->window, &keyboard_touch, p);
+	mlx_hook(p->win, WINDOW_CLOSED, 1L << 0, &exit_window, p);
+	mlx_key_hook(p->win, &keyboard_touch, p);
 	mlx_loop(p->mlx);
 }

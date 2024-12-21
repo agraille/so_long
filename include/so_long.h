@@ -6,7 +6,7 @@
 /*   By: agraille <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 13:32:06 by agraille          #+#    #+#             */
-/*   Updated: 2024/12/20 23:04:56 by agraille         ###   ########.fr       */
+/*   Updated: 2024/12/21 13:14:44 by agraille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,19 +22,30 @@
 
 # define WINDOW_CLOSED 17
 # define ESCAPE 65307
+# define W_KEY 119
+# define A_KEY 97
+# define S_KEY 115
+# define D_KEY 100
+# define UP_ARROW    65362
+# define LEFT_ARROW  65361
+# define DOWN_ARROW  65364
+# define RIGHT_ARROW 65363
 
 typedef struct s_game
 {
 	char	**map;
 	void	*mlx;
-	void	*window;
+	void	*win;
 	void	*pe;
 	void	*pb;
 	void	*pc;
 	void	*pp;
 	void	*pw;
-	int		pos_x;
-	int		pos_y;
+	int		coin;
+	int		size_x;
+	int		size_y;
+	int		player_x;
+	int		player_y;
 	int		pix;
 }	t_win;
 
@@ -55,6 +66,7 @@ void	free_map(char **map);
 void	error(char **map, char *str);
 void	load_pictures(t_win *p);
 void	render_map(t_win *p);
+void	move_player(t_win *p, int dir_x, int dir_y);
 int		exit_window(t_win *ptr);
 int		keyboard_touch(int keycode, t_win *p);
 int		check_char(char c);

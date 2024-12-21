@@ -6,7 +6,7 @@
 /*   By: agraille <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 09:33:31 by agraille          #+#    #+#             */
-/*   Updated: 2024/12/20 21:01:52 by agraille         ###   ########.fr       */
+/*   Updated: 2024/12/21 12:28:55 by agraille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,10 +121,10 @@ int	parsing(char *argv1)
 	if (!map)
 		exit(EXIT_FAILURE);
 	if (!valid_width(map, height) || !check_is_valid(map, height))
-		error(map, "Invalid map structure.\n");
+		error(map, "Error\nInvalid map structure.\n");
 	ft_memset(&value, 0, sizeof(t_ff));
 	if (!requirements(map, height, value))
-		error(map, "The map cannot be completed.\n");
+		error(map, "Error\nThe map cannot be completed.\n");
 	free_map(map);
 	return (height);
 }
