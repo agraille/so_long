@@ -6,7 +6,7 @@
 /*   By: agraille <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 10:37:27 by agraille          #+#    #+#             */
-/*   Updated: 2024/12/21 13:16:00 by agraille         ###   ########.fr       */
+/*   Updated: 2024/12/22 01:07:47 by agraille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,10 @@ static void	count_coins(t_win *p)
 
 static void	init_window(t_win *p, int height)
 {
+	p->last_frame = -1;
+	p->item_frame = 0;
+	p->frame_delay = 2500;
+	p->frame_counter = 0;
 	p->pix = 32;
 	p->size_x = (ft_strlen(p->map[0]) - 1) * 32;
 	p->size_y = height * 32;
@@ -54,12 +58,21 @@ static void	init_window(t_win *p, int height)
 
 void	free_pictures(t_win *p)
 {
+	int	i;
+
+	i = 0;
+	while (i < ITEM_FRAME)
+	{
+		if (p->pc[i])
+			mlx_destroy_image(p->mlx, p->pc[i]);
+		i++;
+	}
 	if (p->pe)
 		mlx_destroy_image(p->mlx, p->pe);
+	if (p->pe2)
+		mlx_destroy_image(p->mlx, p->pe2);
 	if (p->pb)
 		mlx_destroy_image(p->mlx, p->pb);
-	if (p->pc)
-		mlx_destroy_image(p->mlx, p->pc);
 	if (p->pp)
 		mlx_destroy_image(p->mlx, p->pp);
 	if (p->pw)
@@ -84,6 +97,8 @@ void	start_init(char *argv1, int height)
 	p = malloc(sizeof(t_win));
 	if (!p)
 		exit(EXIT_FAILURE);
+	p->item_frame = 0;
+	p->frame_delay = 10;
 	p->map = map_in_tab(argv1, height);
 	if (!p->map)
 		exit(EXIT_FAILURE);
@@ -93,5 +108,7 @@ void	start_init(char *argv1, int height)
 	render_map(p);
 	mlx_hook(p->win, WINDOW_CLOSED, 1L << 0, &exit_window, p);
 	mlx_key_hook(p->win, &keyboard_touch, p);
+	mlx_string_put(p->mlx, p->win, 10, 10, 0xFFFFFF, "SALUT");
+	mlx_loop_hook(p->mlx, &render_animation, p);
 	mlx_loop(p->mlx);
 }

@@ -6,7 +6,7 @@
 /*   By: agraille <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 13:32:06 by agraille          #+#    #+#             */
-/*   Updated: 2024/12/21 13:14:44 by agraille         ###   ########.fr       */
+/*   Updated: 2024/12/21 23:23:35 by agraille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@
 # define LEFT_ARROW  65361
 # define DOWN_ARROW  65364
 # define RIGHT_ARROW 65363
+# define ITEM_FRAME 8
 
 typedef struct s_game
 {
@@ -37,10 +38,15 @@ typedef struct s_game
 	void	*mlx;
 	void	*win;
 	void	*pe;
+	void	*pe2;
 	void	*pb;
-	void	*pc;
+	void	*pc[8];
 	void	*pp;
 	void	*pw;
+	int		item_frame;
+	int		frame_delay;
+	int		frame_counter;
+	int		last_frame;
 	int		coin;
 	int		size_x;
 	int		size_y;
@@ -64,6 +70,7 @@ void	start_init(char *argv1, int height);
 int		parsing(char *argv1);
 void	free_map(char **map);
 void	error(char **map, char *str);
+int		render_animation(t_win *p);
 void	load_pictures(t_win *p);
 void	render_map(t_win *p);
 void	move_player(t_win *p, int dir_x, int dir_y);

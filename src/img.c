@@ -6,11 +6,50 @@
 /*   By: agraille <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/20 20:54:25 by agraille          #+#    #+#             */
-/*   Updated: 2024/12/21 13:17:18 by agraille         ###   ########.fr       */
+/*   Updated: 2024/12/22 01:17:11 by agraille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/so_long.h"
+
+static void	check_frame(t_win *p)
+{
+	if (p->frame_counter >= p->frame_delay)
+    {
+        p->item_frame++;
+        if (p->item_frame >= ITEM_FRAME)
+            p->item_frame = 0;
+        p->frame_counter = 0;
+    }
+}
+
+int	render_animation(t_win *p)
+{
+    int x;;
+    int y;
+	int temp;
+
+	y = -1;
+	temp = 0;
+	while (p->map[++y])
+	{
+		x = -1;
+		while (p->map[y][++x] != '\n')
+		{
+			
+			if (p->map[y][x] == 'C' && p->last_frame != p->item_frame)
+			{
+				mlx_put_image_to_window(p->mlx, p->win, p->pc[p->item_frame], x * p->pix, y * p->pix);
+				temp = 1;
+			}
+		}
+	}
+	if (temp == 1)
+		p->last_frame = p->item_frame;
+    p->frame_counter++;
+	check_frame(p);
+	return (0);
+}
 
 void	render_map(t_win *p)
 {
@@ -33,24 +72,49 @@ void	render_map(t_win *p)
 				p->player_x = x;
 				p->player_y = y;
 			}
-			else if (p->map[y][x] == 'C')
-				mlx_put_image_to_window(p->mlx, p->win, p->pc, x * p->pix, y * p->pix);
-			else if (p->map[y][x] == 'E')
+			else if (p->map[y][x] == 'E' && p->coin > 0)
 				mlx_put_image_to_window(p->mlx, p->win, p->pe, x * p->pix, y * p->pix);
+			else if (p->map[y][x] == 'E' && p->coin == 0)
+				mlx_put_image_to_window(p->mlx, p->win, p->pe2, x * p->pix, y * p->pix);
 		}
+	}
+}
+
+static void load_pictures_item(t_win *p)
+{
+	int	i;
+
+	i = 0;
+	p->pc[0] = mlx_xpm_file_to_image(p->mlx, "xpm/C1.xpm", &p->pix, &p->pix);
+	p->pc[1] = mlx_xpm_file_to_image(p->mlx, "xpm/C2.xpm", &p->pix, &p->pix);
+	p->pc[2] = mlx_xpm_file_to_image(p->mlx, "xpm/C3.xpm", &p->pix, &p->pix);
+	p->pc[3] = mlx_xpm_file_to_image(p->mlx, "xpm/C4.xpm", &p->pix, &p->pix);
+	p->pc[4] = mlx_xpm_file_to_image(p->mlx, "xpm/C5.xpm", &p->pix, &p->pix);
+	p->pc[5] = mlx_xpm_file_to_image(p->mlx, "xpm/C6.xpm", &p->pix, &p->pix);
+	p->pc[6] = mlx_xpm_file_to_image(p->mlx, "xpm/C7.xpm", &p->pix, &p->pix);
+	p->pc[7] = mlx_xpm_file_to_image(p->mlx, "xpm/C8.xpm", &p->pix, &p->pix);
+	while (i < ITEM_FRAME)
+	{
+		if (!p->pc[i])
+		{
+			free_pictures(p);
+			exit_window(p);
+		}
+		i++;
 	}
 }
 
 void	load_pictures(t_win *p)
 {
 	p->pe = mlx_xpm_file_to_image(p->mlx, "xpm/End.xpm", &p->pix, &p->pix);
+	p->pe2 = mlx_xpm_file_to_image(p->mlx, "xpm/End2.xpm", &p->pix, &p->pix);
 	p->pb = mlx_xpm_file_to_image(p->mlx, "xpm/floor.xpm", &p->pix, &p->pix);
-	p->pc = mlx_xpm_file_to_image(p->mlx, "xpm/item.xpm", &p->pix, &p->pix);
 	p->pp = mlx_xpm_file_to_image(p->mlx, "xpm/hero.xpm", &p->pix, &p->pix);
 	p->pw = mlx_xpm_file_to_image(p->mlx, "xpm/wall.xpm", &p->pix, &p->pix);
-	if (!p->pe || !p->pb || !p->pc || !p->pp || !p->pw)
+	if (!p->pe || !p->pb || !p->pp || !p->pw)
 	{
 		free_pictures(p);
 		exit_window(p);
 	}
+	load_pictures_item(p);
 }

@@ -6,7 +6,7 @@
 /*   By: agraille <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/21 11:56:05 by agraille          #+#    #+#             */
-/*   Updated: 2024/12/21 13:18:46 by agraille         ###   ########.fr       */
+/*   Updated: 2024/12/21 23:37:17 by agraille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ void	move_player(t_win *p, int dir_x, int dir_y)
 		p->map[p->player_y][p->player_x] = '0';
 		p->player_x = new_x;
 		p->player_y = new_y;
+		print_moove();
 		exit_window(p);
 	}
 }
