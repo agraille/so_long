@@ -6,7 +6,7 @@
 /*   By: agraille <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 13:32:06 by agraille          #+#    #+#             */
-/*   Updated: 2024/12/23 13:37:01 by agraille         ###   ########.fr       */
+/*   Updated: 2024/12/23 14:43:34 by agraille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ typedef struct s_game
 	void	*pw5;
 	void	*pw6;
 	void	*pk;
-	int		item_frame;
+	int		i_frame;
 	int		item_delay;
 	int		wolf_delay2;
 	int		frame_counter;
@@ -68,10 +68,10 @@ typedef struct s_game
 	int		coin;
 	int		size_x;
 	int		size_y;
-	int		player_x;
-	int		player_y;
-	int		wolf_x;
-	int		wolf_y;
+	int		p_x;
+	int		p_y;
+	int		wx;
+	int		wy;
 	int		pix;
 	int		moove;
 	int		y_size;
@@ -109,5 +109,6 @@ int		check_frame(t_win *p);
 void	move_wolf(t_win *p);
 void	render_map_bis(t_win *p);
 void	check_winner(t_win *p);
+void	print_moove(t_win *p);
 
 #endif

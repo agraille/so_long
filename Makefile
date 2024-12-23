@@ -6,14 +6,14 @@
 #    By: agraille <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/16 10:58:27 by agraille          #+#    #+#              #
-#    Updated: 2024/12/23 13:23:18 by agraille         ###   ########.fr        #
+#    Updated: 2024/12/23 14:13:32 by agraille         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = so_long
 CC=cc
 CFLAGS=-Wall -Wextra -Werror -g3
-SRC = src/main.c src/window.c src/utils.c src/parsing.c src/flood_fill.c src/img.c src/action.c src/wolf.c
+SRC = src/main.c src/window.c src/utils.c src/parsing.c src/flood_fill.c src/img.c src/action.c src/wolf.c src/load_and_free.c
 OBJ_DIR = obj
 OBJ	= $(addprefix $(OBJ_DIR)/,$(SRC:%.c=%.o))
 

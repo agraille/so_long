@@ -6,7 +6,7 @@
 /*   By: agraille <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 13:14:42 by agraille          #+#    #+#             */
-/*   Updated: 2024/12/23 13:31:46 by agraille         ###   ########.fr       */
+/*   Updated: 2024/12/23 15:04:06 by agraille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,82 +14,91 @@
 
 void	check_winner(t_win *p)
 {
-    if (p->wolf_x == p->player_x && p->wolf_y == p->player_y)
-    {
-        printmoove(p);
+	if (p->wx == p->p_x && p->wy == p->p_y)
+	{
+		printmoove(p);
 		write(1, "Wolf: Better than you!\n", 23);
 		exit_window(p);
-    }
+	}
 }
 
-static void	move_wolf_x(t_win *p, t_ff new, int dx)
+static	void	put_for_norm(t_win *p, char c)
+{
+	if (c == '1')
+		mlx_put_image_to_window(p->mlx, p->win, p->pb,
+			p->wx * p->pix, p->wy * p->pix);
+	else
+		mlx_put_image_to_window(p->mlx, p->win, p->pk,
+			p->wx * p->pix, p->wy * p->pix);
+}
+
+static void	move_wolf_x(t_win *p, t_ff n, int dx)
 {
 	if (dx != 0)
-    {
-        new.p_x = p->wolf_x + dx;
-        new.p_y = p->wolf_y;
-        if (p->map[new.p_y][new.p_x] == '0' || p->map[new.p_y][new.p_x] == 'P')
-        {
-            p->map[p->wolf_y][p->wolf_x] = '0';
-            mlx_put_image_to_window(p->mlx, p->win, p->pb, p->wolf_x * p->pix, p->wolf_y * p->pix);
-            p->map[new.p_y][new.p_x] = 'K';
-            p->wolf_x = new.p_x;
-            p->wolf_y = new.p_y;
-            mlx_put_image_to_window(p->mlx, p->win, p->pk, p->wolf_x * p->pix, p->wolf_y * p->pix);
-            return ;
-        }
-        else if (p->map[new.p_y][new.p_x] == 'C' && (p->map[new.p_y][new.p_x + dx] == '0' || p->map[new.p_y][new.p_x] == 'P'))
-        {
-            p->map[p->wolf_y][p->wolf_x] = '0';
-            mlx_put_image_to_window(p->mlx, p->win, p->pb, p->wolf_x * p->pix, p->wolf_y * p->pix);
-            p->map[new.p_y][new.p_x + dx] = 'K';
-            p->wolf_x = new.p_x + dx;
-            p->wolf_y = new.p_y;
-            mlx_put_image_to_window(p->mlx, p->win, p->pk, p->wolf_x * p->pix, p->wolf_y * p->pix);
-            return ;
-        }
-    }
+	{
+		n.p_x = p->wx + dx;
+		n.p_y = p->wy;
+		if (p->map[n.p_y][n.p_x] == '0' || p->map[n.p_y][n.p_x] == 'P')
+		{
+			p->map[p->wy][p->wx] = '0';
+			put_for_norm(p, '1');
+			p->map[n.p_y][n.p_x] = 'K';
+			p->wx = n.p_x;
+			p->wy = n.p_y;
+			put_for_norm(p, '0');
+		}
+		else if (p->map[n.p_y][n.p_x] == 'C' &&
+			(p->map[n.p_y][n.p_x + dx] == '0' || p->map[n.p_y][n.p_x] == 'P'))
+		{
+			p->map[p->wy][p->wx] = '0';
+			put_for_norm(p, '1');
+			p->map[n.p_y][n.p_x + dx] = 'K';
+			p->wx = n.p_x + dx;
+			p->wy = n.p_y;
+			put_for_norm(p, '0');
+		}
+	}
 }
 
-static void	move_wolf_y(t_win *p, t_ff new, int dy, int dx)
+static void	move_wolf_y(t_win *p, t_ff n, int dy, int dx)
 {
-	 if (dy != 0)
-    {
-        new.p_x = p->wolf_x;
-        new.p_y = p->wolf_y + dy;
-        if (p->map[new.p_y][new.p_x] == '0' || p->map[new.p_y][new.p_x] == 'P')
-        {
-            p->map[p->wolf_y][p->wolf_x] = '0';
-            mlx_put_image_to_window(p->mlx, p->win, p->pb, p->wolf_x * p->pix, p->wolf_y * p->pix);
-            p->map[new.p_y][new.p_x] = 'K';
-            p->wolf_x = new.p_x;
-            p->wolf_y = new.p_y;
-            mlx_put_image_to_window(p->mlx, p->win, p->pk, p->wolf_x * p->pix, p->wolf_y * p->pix);
-            return ;
-        }
-        else if (p->map[new.p_y][new.p_x] == 'C' && (p->map[new.p_y][new.p_x + dx] == '0' || p->map[new.p_y][new.p_x] == 'P'))
-        {
-            p->map[p->wolf_y][p->wolf_x] = '0';
-            mlx_put_image_to_window(p->mlx, p->win, p->pb, p->wolf_x * p->pix, p->wolf_y * p->pix);
-            p->map[new.p_y + dy][new.p_x] = 'K';
-            p->wolf_x = new.p_x;
-            p->wolf_y = new.p_y + dy;
-            mlx_put_image_to_window(p->mlx, p->win, p->pk, p->wolf_x * p->pix, p->wolf_y * p->pix);
-            return ;
-        }
-    }
+	if (dy != 0)
+	{
+		n.p_x = p->wx;
+		n.p_y = p->wy + dy;
+		if (p->map[n.p_y][n.p_x] == '0' || p->map[n.p_y][n.p_x] == 'P')
+		{
+			p->map[p->wy][p->wx] = '0';
+			put_for_norm(p, '1');
+			p->map[n.p_y][n.p_x] = 'K';
+			p->wx = n.p_x;
+			p->wy = n.p_y;
+			put_for_norm(p, '0');
+		}
+		else if (p->map[n.p_y][n.p_x] == 'C' &&
+			(p->map[n.p_y][n.p_x + dx] == '0' || p->map[n.p_y][n.p_x] == 'P'))
+		{
+			p->map[p->wy][p->wx] = '0';
+			put_for_norm(p, '1');
+			p->map[n.p_y + dy][n.p_x] = 'K';
+			p->wx = n.p_x;
+			p->wy = n.p_y + dy;
+			put_for_norm(p, '0');
+		}
+	}
 }
 
-void move_wolf(t_win *p)
+void	move_wolf(t_win *p)
 {
-    int dx, dy;
-    t_ff	new;
+	int		dx;
+	int		dy;
+	t_ff	n;
 
-	new.p_x = 0;
-	new.p_y = 0;
-    dx = (p->player_x > p->wolf_x) - (p->player_x < p->wolf_x);
-    dy = (p->player_y > p->wolf_y) - (p->player_y < p->wolf_y);
-    move_wolf_x(p, new, dx);
-    move_wolf_y(p, new, dy, dx);
-    check_winner(p);
+	n.p_x = 0;
+	n.p_y = 0;
+	dx = (p->p_x > p->wx) - (p->p_x < p->wx);
+	dy = (p->p_y > p->wy) - (p->p_y < p->wy);
+	move_wolf_x(p, n, dx);
+	move_wolf_y(p, n, dy, dx);
+	check_winner(p);
 }

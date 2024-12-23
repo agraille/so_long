@@ -6,20 +6,18 @@
 /*   By: agraille <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 10:31:42 by agraille          #+#    #+#             */
-/*   Updated: 2024/12/23 13:37:01 by agraille         ###   ########.fr       */
+/*   Updated: 2024/12/23 15:16:54 by agraille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/so_long.h"
 
-void	free_map(char **map)
+void	print_moove(t_win *p)
 {
-	ssize_t	i;
-
-	i = -1;
-	while (map[++i])
-		free(map[i]);
-	free(map);
+	write (1, "Numbers of moove = ", 19);
+	p->moove++;
+	ft_putnbr_fd(p->moove, STDOUT_FILENO);
+	write(1, "\n", 1);
 }
 
 int	check_char(char c)
@@ -43,10 +41,10 @@ void	error(char **map, char *str)
 	exit(EXIT_FAILURE);
 }
 
-int printmoove(t_win *p)
+int	printmoove(t_win *p)
 {
-	char *j;
-	
+	char	*j;
+
 	j = ft_itoa(p->moove);
 	mlx_string_put(p->mlx, p->win, 1, 14, 0x00FF00, j);
 	free(j);
@@ -56,14 +54,14 @@ int printmoove(t_win *p)
 int	check_frame(t_win *p)
 {
 	if (p->frame_counter >= p->item_delay)
-    {
-        p->item_frame++;
-        if (p->item_frame >= ITEM_FRAME)
-            p->item_frame = 0;
-        p->frame_counter = 0;
+	{
+		p->i_frame++;
+		if (p->i_frame >= ITEM_FRAME)
+			p->i_frame = 0;
+		p->frame_counter = 0;
 		return (1);
-    }
-	if (p->frame_counter2 > p->wolf_delay2)
+	}
+	if (p->frame_counter2 > p->wolf_delay2 && p->wy != 0)
 	{
 		move_wolf(p);
 		p->frame_counter2 = 0;

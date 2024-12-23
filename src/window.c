@@ -6,7 +6,7 @@
 /*   By: agraille <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 10:37:27 by agraille          #+#    #+#             */
-/*   Updated: 2024/12/23 13:37:01 by agraille         ###   ########.fr       */
+/*   Updated: 2024/12/23 15:20:20 by agraille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static void	init_window(t_win *p, int height)
 {
 	p->moove = 0;
 	p->last_frame = -1;
-	p->item_frame = 0;
+	p->i_frame = 0;
 	p->item_delay = 2000;
 	p->wolf_delay2 = 4000;
 	p->frame_counter = 0;
@@ -62,59 +62,6 @@ static void	init_window(t_win *p, int height)
 	}
 }
 
-void	free_pictures(t_win *p)
-{
-	int	i;
-
-	i = 0;
-	while (i < ITEM_FRAME)
-	{
-		if (p->pc[i])
-			mlx_destroy_image(p->mlx, p->pc[i]);
-		i++;
-	}
-	if (p->pe)
-		mlx_destroy_image(p->mlx, p->pe);
-	if (p->pe2)
-		mlx_destroy_image(p->mlx, p->pe2);
-	if (p->pb)
-		mlx_destroy_image(p->mlx, p->pb);
-	if (p->pb2)
-		mlx_destroy_image(p->mlx, p->pb2);
-	if (p->pp)
-		mlx_destroy_image(p->mlx, p->pp);
-	if (p->pp2)
-		mlx_destroy_image(p->mlx, p->pp2);
-	if (p->pp3)
-		mlx_destroy_image(p->mlx, p->pp3);
-	if (p->pp4)
-		mlx_destroy_image(p->mlx, p->pp4);
-	if (p->pp5)
-		mlx_destroy_image(p->mlx, p->pp5);
-	if (p->pp6)
-		mlx_destroy_image(p->mlx, p->pp6);
-	if (p->pp7)
-		mlx_destroy_image(p->mlx, p->pp7);
-	if (p->pp8)
-		mlx_destroy_image(p->mlx, p->pp8);
-	if (p->pp9)
-		mlx_destroy_image(p->mlx, p->pp9);
-	if (p->pw)
-		mlx_destroy_image(p->mlx, p->pw);
-	if (p->pw2)
-		mlx_destroy_image(p->mlx, p->pw2);
-	if (p->pw3)
-		mlx_destroy_image(p->mlx, p->pw3);
-	if (p->pw4)
-		mlx_destroy_image(p->mlx, p->pw4);
-	if (p->pw5)
-		mlx_destroy_image(p->mlx, p->pw5);
-	if (p->pw6)
-		mlx_destroy_image(p->mlx, p->pw6);
-	if (p->pk)
-		mlx_destroy_image(p->mlx, p->pk);	
-}
-
 int	exit_window(t_win *p)
 {
 	free_map(p->map);
@@ -136,6 +83,8 @@ void	start_init(char *argv1, int height)
 	p->map = map_in_tab(argv1, height);
 	if (!p->map)
 		exit(EXIT_FAILURE);
+	p->wx = 0;
+	p->wy = 0;
 	init_window(p, height);
 	load_pictures(p);
 	count_coins(p);
