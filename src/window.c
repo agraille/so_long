@@ -6,7 +6,7 @@
 /*   By: agraille <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 10:37:27 by agraille          #+#    #+#             */
-/*   Updated: 2024/12/23 15:20:20 by agraille         ###   ########.fr       */
+/*   Updated: 2024/12/23 21:07:50 by agraille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ void	start_init(char *argv1, int height)
 	render_map(p);
 	render_map_bis(p);
 	mlx_hook(p->win, WINDOW_CLOSED, 1L << 0, &exit_window, p);
-	mlx_key_hook(p->win, &keyboard_touch, p);
+	mlx_hook(p->win, 2, 1L << 0,  &keyboard_touch, p);
 	mlx_loop_hook(p->mlx, &render_animation, p);
 	mlx_loop(p->mlx);
 }
