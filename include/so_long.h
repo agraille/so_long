@@ -6,7 +6,7 @@
 /*   By: agraille <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 13:32:06 by agraille          #+#    #+#             */
-/*   Updated: 2024/12/21 23:23:35 by agraille         ###   ########.fr       */
+/*   Updated: 2024/12/23 01:21:45 by agraille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,15 @@ typedef struct s_game
 	void	*pe;
 	void	*pe2;
 	void	*pb;
+	void	*pb2;
 	void	*pc[8];
 	void	*pp;
 	void	*pw;
+	void	*pw2;
+	void	*pw3;
+	void	*pw4;
+	void	*pw5;
+	void	*pw6;
 	int		item_frame;
 	int		frame_delay;
 	int		frame_counter;
@@ -53,6 +59,9 @@ typedef struct s_game
 	int		player_x;
 	int		player_y;
 	int		pix;
+	int		moove;
+	int		y_size;
+	int		x_size;
 }	t_win;
 
 typedef struct s_flood_fill
@@ -81,5 +90,7 @@ int		requirements(char **map, int height, t_ff value);
 void	free_pictures(t_win *p);
 int		exit_window(t_win *p);
 char	**map_in_tab(char *argv1, int height);
+int		printmoove(t_win *p);
+int		check_frame(t_win *p);
 
 #endif

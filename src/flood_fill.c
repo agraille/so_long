@@ -6,7 +6,7 @@
 /*   By: agraille <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 12:19:36 by agraille          #+#    #+#             */
-/*   Updated: 2024/12/19 16:27:06 by agraille         ###   ########.fr       */
+/*   Updated: 2024/12/22 21:29:05 by agraille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static	int	requirements_bis(t_ff value)
 
 static void	flood_fill(char **map, int p_y, int p_x)
 {
-	if (map[p_y][p_x] == '1')
+	if (map[p_y][p_x] == '1' || map[p_y][p_x] == 'K')
 		return ;
 	map[p_y][p_x] = '1';
 	flood_fill(map, p_y - 1, p_x);

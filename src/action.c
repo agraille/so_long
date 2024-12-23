@@ -6,7 +6,7 @@
 /*   By: agraille <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/21 11:56:05 by agraille          #+#    #+#             */
-/*   Updated: 2024/12/21 23:37:17 by agraille         ###   ########.fr       */
+/*   Updated: 2024/12/22 23:16:53 by agraille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,40 +27,38 @@ int	keyboard_touch(int keycode, t_win *p)
 	return (1);
 }
 
-static void	print_moove(void)
+static void	print_moove(t_win *p)
 {
-	static int	i = 1;
-
 	write (1, "Numbers of moove = ", 19);
-	ft_putnbr_fd(i, STDOUT_FILENO);
-	i++;
+	p->moove++;
+	ft_putnbr_fd(p->moove, STDOUT_FILENO);
 	write(1, "\n", 1);
 }
 
 void	move_player(t_win *p, int dir_x, int dir_y)
 {
-	int	new_x;
-	int	new_y;
+	int	x;
+	int	y;
 
-	new_x = p->player_x + dir_x;
-	new_y = p->player_y + dir_y;
-	if (p->map[new_y][new_x] != '1' && p->map[new_y][new_x] != 'E')
+	x = p->player_x + dir_x;
+	y = p->player_y + dir_y;
+	if (p->map[y][x] != '1' && p->map[y][x] != 'E' && p->map[y][x] != 'K')
 	{
 		p->map[p->player_y][p->player_x] = '0';
-		p->player_x = new_x;
-		p->player_y = new_y;
+		p->player_x = x;
+		p->player_y = y;
 		if (p->map[p->player_y][p->player_x] == 'C')
 			p->coin--;
 		p->map[p->player_y][p->player_x] = 'P';
 		render_map(p);
-		print_moove();
+		print_moove(p);
 	}
-	if (p->map[new_y][new_x] == 'E' && p->coin == 0)
+	if ((p->map[y][x] == 'E' && p->coin == 0) || p->map[y][x] == 'K')
 	{
 		p->map[p->player_y][p->player_x] = '0';
-		p->player_x = new_x;
-		p->player_y = new_y;
-		print_moove();
+		p->player_x = x;
+		p->player_y = y;
+		print_moove(p);
 		exit_window(p);
 	}
 }

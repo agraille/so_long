@@ -6,22 +6,11 @@
 /*   By: agraille <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/20 20:54:25 by agraille          #+#    #+#             */
-/*   Updated: 2024/12/22 01:17:11 by agraille         ###   ########.fr       */
+/*   Updated: 2024/12/23 01:23:00 by agraille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/so_long.h"
-
-static void	check_frame(t_win *p)
-{
-	if (p->frame_counter >= p->frame_delay)
-    {
-        p->item_frame++;
-        if (p->item_frame >= ITEM_FRAME)
-            p->item_frame = 0;
-        p->frame_counter = 0;
-    }
-}
 
 int	render_animation(t_win *p)
 {
@@ -29,25 +18,25 @@ int	render_animation(t_win *p)
     int y;
 	int temp;
 
+	printmoove(p);
 	y = -1;
 	temp = 0;
-	while (p->map[++y])
+	while (p->map[++y] && p->last_frame != p->item_frame)
 	{
 		x = -1;
 		while (p->map[y][++x] != '\n')
 		{
 			
-			if (p->map[y][x] == 'C' && p->last_frame != p->item_frame)
+			if (p->map[y][x] == 'C')
 			{
 				mlx_put_image_to_window(p->mlx, p->win, p->pc[p->item_frame], x * p->pix, y * p->pix);
 				temp = 1;
 			}
 		}
 	}
+	check_frame(p);
 	if (temp == 1)
 		p->last_frame = p->item_frame;
-    p->frame_counter++;
-	check_frame(p);
 	return (0);
 }
 
@@ -62,10 +51,24 @@ void	render_map(t_win *p)
 		x = -1;
 		while (p->map[y][++x] != '\n')
 		{
-			if (p->map[y][x] == '1')
+			if (x == 0 && y == 0)
+				mlx_put_image_to_window(p->mlx, p->win, p->pw6, x * p->pix, y * p->pix);
+			else if (x == 0 && y == p->y_size)
+				mlx_put_image_to_window(p->mlx, p->win, p->pw3, x * p->pix, y * p->pix);
+			else if (y == 0 && x == p->x_size)
+				mlx_put_image_to_window(p->mlx, p->win, p->pw4, x * p->pix, y * p->pix);
+			else if (y == p->y_size && x == p->x_size)
+				mlx_put_image_to_window(p->mlx, p->win, p->pw5, x * p->pix, y * p->pix);		
+			else if (p->map[y][x] == '1' && (y == 0 || y == p->y_size))
 				mlx_put_image_to_window(p->mlx, p->win, p->pw, x * p->pix, y * p->pix);
-			else if (p->map[y][x] == '0')
+			else if (p->map[y][x] == '1' && (x == 0 || x == p->x_size))
+				mlx_put_image_to_window(p->mlx, p->win, p->pw2, x * p->pix, y * p->pix);
+			else if (p->map[y][x] == '1')
+				mlx_put_image_to_window(p->mlx, p->win, p->pw, x * p->pix, y * p->pix);
+			else if (p->map[y][x] == '0' && (x % 2 == 0))
 				mlx_put_image_to_window(p->mlx, p->win, p->pb, x * p->pix, y * p->pix);
+			else if (p->map[y][x] == '0')
+				mlx_put_image_to_window(p->mlx, p->win, p->pb2, x * p->pix, y * p->pix);
 			else if (p->map[y][x] == 'P')
 			{
 				mlx_put_image_to_window(p->mlx, p->win, p->pp, x * p->pix, y * p->pix);
@@ -109,9 +112,15 @@ void	load_pictures(t_win *p)
 	p->pe = mlx_xpm_file_to_image(p->mlx, "xpm/End.xpm", &p->pix, &p->pix);
 	p->pe2 = mlx_xpm_file_to_image(p->mlx, "xpm/End2.xpm", &p->pix, &p->pix);
 	p->pb = mlx_xpm_file_to_image(p->mlx, "xpm/floor.xpm", &p->pix, &p->pix);
+	p->pb2 = mlx_xpm_file_to_image(p->mlx, "xpm/floor2.xpm", &p->pix, &p->pix);
 	p->pp = mlx_xpm_file_to_image(p->mlx, "xpm/hero.xpm", &p->pix, &p->pix);
 	p->pw = mlx_xpm_file_to_image(p->mlx, "xpm/wall.xpm", &p->pix, &p->pix);
-	if (!p->pe || !p->pb || !p->pp || !p->pw)
+	p->pw2 = mlx_xpm_file_to_image(p->mlx, "xpm/wall2.xpm", &p->pix, &p->pix);
+	p->pw3 = mlx_xpm_file_to_image(p->mlx, "xpm/wall3.xpm", &p->pix, &p->pix);
+	p->pw4 = mlx_xpm_file_to_image(p->mlx, "xpm/wall4.xpm", &p->pix, &p->pix);
+	p->pw5 = mlx_xpm_file_to_image(p->mlx, "xpm/wall5.xpm", &p->pix, &p->pix);
+	p->pw6 = mlx_xpm_file_to_image(p->mlx, "xpm/wall6.xpm", &p->pix, &p->pix);
+	if (!p->pe || !p->pb || !p->pb2 || !p->pp || !p->pw || !p->pw2 || !p->pw3 || !p->pw4 || !p->pw5 || !p->pw6 || !p->pe2)
 	{
 		free_pictures(p);
 		exit_window(p);
