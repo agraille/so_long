@@ -6,7 +6,7 @@
 /*   By: agraille <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 10:37:27 by agraille          #+#    #+#             */
-/*   Updated: 2024/12/23 01:23:28 by agraille         ###   ########.fr       */
+/*   Updated: 2024/12/23 13:37:01 by agraille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,11 @@ static void	init_window(t_win *p, int height)
 	p->moove = 0;
 	p->last_frame = -1;
 	p->item_frame = 0;
-	p->frame_delay = 2000;
+	p->item_delay = 2000;
+	p->wolf_delay2 = 4000;
 	p->frame_counter = 0;
+	p->frame_counter2 = 0;
+	p->animation_frame = 0;
 	p->pix = 32;
 	p->size_x = (ft_strlen(p->map[0]) - 1) * 32;
 	p->size_y = height * 32;
@@ -80,6 +83,22 @@ void	free_pictures(t_win *p)
 		mlx_destroy_image(p->mlx, p->pb2);
 	if (p->pp)
 		mlx_destroy_image(p->mlx, p->pp);
+	if (p->pp2)
+		mlx_destroy_image(p->mlx, p->pp2);
+	if (p->pp3)
+		mlx_destroy_image(p->mlx, p->pp3);
+	if (p->pp4)
+		mlx_destroy_image(p->mlx, p->pp4);
+	if (p->pp5)
+		mlx_destroy_image(p->mlx, p->pp5);
+	if (p->pp6)
+		mlx_destroy_image(p->mlx, p->pp6);
+	if (p->pp7)
+		mlx_destroy_image(p->mlx, p->pp7);
+	if (p->pp8)
+		mlx_destroy_image(p->mlx, p->pp8);
+	if (p->pp9)
+		mlx_destroy_image(p->mlx, p->pp9);
 	if (p->pw)
 		mlx_destroy_image(p->mlx, p->pw);
 	if (p->pw2)
@@ -91,7 +110,9 @@ void	free_pictures(t_win *p)
 	if (p->pw5)
 		mlx_destroy_image(p->mlx, p->pw5);
 	if (p->pw6)
-		mlx_destroy_image(p->mlx, p->pw6);	
+		mlx_destroy_image(p->mlx, p->pw6);
+	if (p->pk)
+		mlx_destroy_image(p->mlx, p->pk);	
 }
 
 int	exit_window(t_win *p)
@@ -112,8 +133,6 @@ void	start_init(char *argv1, int height)
 	p = malloc(sizeof(t_win));
 	if (!p)
 		exit(EXIT_FAILURE);
-	p->item_frame = 0;
-	p->frame_delay = 10;
 	p->map = map_in_tab(argv1, height);
 	if (!p->map)
 		exit(EXIT_FAILURE);
@@ -121,6 +140,7 @@ void	start_init(char *argv1, int height)
 	load_pictures(p);
 	count_coins(p);
 	render_map(p);
+	render_map_bis(p);
 	mlx_hook(p->win, WINDOW_CLOSED, 1L << 0, &exit_window, p);
 	mlx_key_hook(p->win, &keyboard_touch, p);
 	mlx_loop_hook(p->mlx, &render_animation, p);
