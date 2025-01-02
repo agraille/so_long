@@ -6,7 +6,7 @@
 /*   By: agraille <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 09:33:31 by agraille          #+#    #+#             */
-/*   Updated: 2024/12/23 13:50:44 by agraille         ###   ########.fr       */
+/*   Updated: 2025/01/02 07:12:16 by agraille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,8 @@ static void	find_line(char *argv1, int *height)
 	while (readed > 0)
 	{
 		readed = read(fd, buffer, 1);
+		if (readed == -1)
+			exit(EXIT_FAILURE);
 		if (buffer[0] == '\n')
 			(*height)++;
 	}

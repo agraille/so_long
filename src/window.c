@@ -6,7 +6,7 @@
 /*   By: agraille <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 10:37:27 by agraille          #+#    #+#             */
-/*   Updated: 2024/12/23 21:07:50 by agraille         ###   ########.fr       */
+/*   Updated: 2025/01/02 07:31:30 by agraille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,8 @@ static void	init_window(t_win *p, int height)
 	p->moove = 0;
 	p->last_frame = -1;
 	p->i_frame = 0;
-	p->item_delay = 2000;
-	p->wolf_delay2 = 4000;
+	p->item_delay = 1200;
+	p->wolf_delay2 = 3500;
 	p->frame_counter = 0;
 	p->frame_counter2 = 0;
 	p->animation_frame = 0;
