@@ -103,10 +103,16 @@ static void	find_line(char *argv1, int *height)
 	while (readed > 0)
 	{
 		readed = read(fd, buffer, 1);
-		if (readed == -1)
+		if (readed == -1){
+			close(fd);
 			exit(EXIT_FAILURE);
-		if (buffer[0] == '\n')
+		}
+		if (readed == 1 && buffer[0] == '\n')
 			(*height)++;
+	}
+	if (*height == 0){
+		close(fd);
+		exit(EXIT_FAILURE);
 	}
 	(*height)--;
 	close (fd);
