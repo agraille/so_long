@@ -69,10 +69,10 @@ Voici à quoi ressemble le jeu en mode texte :
 
 en mode graphique :
 
-- ![Texte alternatif](https://github.com/agraille/42/raw/main/Image%20collée.png)
-- ![Texte alternatif](https://github.com/agraille/42/raw/main/Image%20collée%20(2).png)
-- ![Texte alternatif](https://github.com/agraille/42/raw/main/Image%20collée%20(3).png)
-- ![Texte alternatif](https://github.com/agraille/42/raw/main/Image%20collée%20(4).png)
+- ![Texte alternatif](https://github.com/agraille/so_long/raw/main/Image%20collée%20(1).png)
+- ![Texte alternatif](https://github.com/agraille/so_long/raw/main/Image%20collée%20(2).png)
+- ![Texte alternatif](https://github.com/agraille/so_long/raw/main/Image%20collée%20(3).png)
+- ![Texte alternatif](https://github.com/agraille/so_long/raw/main/Image%20collée%20(4).png)
 
 
 Légende :
